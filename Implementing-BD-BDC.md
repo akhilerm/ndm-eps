@@ -14,14 +14,16 @@ sdc           8:32   1  14.4G  0 disk
   └─vg0-lv0 253:0    0     6G  0 lvm  
 ```
 A node having the above disk configuration will have a total of 8 blockdevices:
-	1. /dev/sda
-	2. /dev/sdb
-	3. /dev/sdc
-	4. /dev/sda1
-	5. /dev/sda2
-	6. /dev/sdc1
-	7. /dev/sdc2
-	8. /dev/mapper/vg0-lv0 --> /dev/dm-0
+```
+1. /dev/sda
+2. /dev/sdb
+3. /dev/sdc
+4. /dev/sda1
+5. /dev/sda2
+6. /dev/sdc1
+7. /dev/sdc2
+8. /dev/mapper/vg0-lv0 --> /dev/dm-0
+```
 
 ### 2. What happens to Disk resource
 
