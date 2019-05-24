@@ -13,6 +13,6 @@ For every LVM device created in the host, we need to find, the volume group, phy
 4. For finding the backing devices, an lvm package can be introduced which gives the list of backing devices given a volume group/dm device. The code can make use of `/etc/lvm/backup/DM_VG_NAME` file and read its contents to get the PVs and LVs in the volume group.
 
 
-NOTE: The reason for selecting `/dev/mapper/DM_NAME` as path instead of `/dev/dm-X` is because, when the device is mounted, the path used in `/proc/1/mounts` is the mapper path. This will help to easily match the device and mountpoint.
+**NOTE:** The reason for selecting `/dev/mapper/DM_NAME` as path instead of `/dev/dm-X` is because, when the device is mounted, the path used in `/proc/1/mounts` is the mapper path. This will help to easily match the device and mountpoint.
 
 I also propose, a `by-uuid` type in devlinks which can be useful in some cases like LVM.
