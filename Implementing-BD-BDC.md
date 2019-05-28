@@ -1,6 +1,6 @@
 ### 1. Implementation of BlockDevice(BD) resource
 
-A BlockDevice (BD) is defined as any physical/logical device that is available on the host. Physical disks, virtual disks, partitions, lvms, RAID devices all can be categorized as block devices.
+A BlockDevice (BD) is defined as any physical/logical storage device that is available on the host. Physical disks, virtual disks, partitions, lvms, RAID devices all can be categorized as block devices.
 
 ```
 sda           8:0    0 465.8G  0 disk 
