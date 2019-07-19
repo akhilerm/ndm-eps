@@ -1,0 +1,6 @@
+### Dynamically fetching details of disk by seachest/smart probe
+
+Currently seachest and smart probe can get all the info of disk which has been attached to the host before the Deamonset pod started. But info
+of disks which are attached after the pod is started is not available due to a bug in docker, which prevents `/dev` of the container from being updated. New disks/lvms that are made available on the host will not have an entry in the `/dev` directory. This causes seachest and smart probe to fail because they require devpath to fetch the details.
+
+The method I propose to get the device files inside `/dev` is a little bit risky, but can be gauranteed to work. I propose to create a separate script (python/shell) which listens for udev events and whenever finds a device which does  not have an entry in the `/dev` directory, use the syspath obtained from udevadm, and call mknod() to create the device. This script will also create approprate symlinks (by-id, by-path) for the device is `/dev/disk`. This according to me is a very bad approach to solving the problem, because we violate the principle of running a single process in a container.
