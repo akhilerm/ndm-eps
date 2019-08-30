@@ -108,15 +108,15 @@ listed in `udevadm info` and create the config.
 
 ```
 --> MountFilter------
-					 \
-					  \
-					   \
-					    \
+                     \
+                      \
+                       \
+                        \
 ----------------------> PathFilter ------------> PropertyFilter
-												 /
-												/
+                                                 /
+                                                /
 --> AnyUserDefinedFilter....--------------------
-		(eg: Vendor)
+    	(eg: Vendor)
 ```
 
 The property filter struct will contain something like:
