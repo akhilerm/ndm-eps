@@ -71,6 +71,29 @@ type BlockDevice struct {
 }
 ```
 
+#### cmd
+The `cmd` directory at the root of the project will contain packages for each binary that can be generated from this repository. It 
+should contain only Cobra CLI command code, or the main() for the function
+
+#### AgentDaemon
+Agent daemon is the main ndm daemon process that will be running on the system. The agent daemon will be started by a call from `cmd/agentdaemon`. 
+Following will be done
+1. Load the configuration
+2. Initialize DB client
+3. Initialize probes and filters based on config
+4. Start the listeners/monitor based on config
+5. Transfer the control to eventhandler
+
+#### EventHandler
+An eventhandler is started by the agent daemon. 
+
+Whenever a system event is generated like new device attached or a change happened in the mount tree, the listeners for those
+events will generate a minimal `BlockDevice` struct and send it to a channel (say `EventMessage` ) for processing.
+
+The eventhandler will be receiving events from `EventMessage` channel and whenever and process it. The processing will involve
+filling details in the minimal `BlockDevice` struct using probes, applying filters and performing a DB operation.
+
+**NOTE**: Regardless of the listener from which the event is generated, `pkg/udev` will be used to generate a UUID for the BlockDevice 
 
 #### Filters
 Filter will have all the filters that we use in NDM. Every filter at its core will use a `property-filter`
@@ -95,23 +118,11 @@ listed in `udevadm info` and create the config.
 		(eg: Vendor)
 ```
 
-#### EventHandler
-An eventhandler is started by the agent daemon. 
-// TODO finalize approach to use
-The monitor/listeners for system events can either be started by the handler itself or by the agent daemon. 
-
-Whenever a system event is generated like new device attached or a change happened in the mount tree, the listeners for those
-events will generate a minimal `BlockDevice` struct and send it to a channel (say `EventMessage` ) for processing.
-
-The eventhandler will be receiving events from `EventMessage` channel and whenever and process it. The processing will involve
-filling details in the minimal `BlockDevice` struct using probes, applying filters and performing a DB operation.
-
-**NOTE**: Regardless of the listener from which the event is generated, `pkg/udev` will be used to generate a UUID for the BlockDevice 
 
 #### Probes
 Probes are used to fetch various details of the disk from the system. SMART, Seachest, Capacity, Mount, Udev will be the various probes
 used to fetch the data.
 
-#### cmd
-The `cmd` directory at the root of the project will contain packages for each binary that can be generated from this repository. It 
-should contain only Cobra CLI command code, or the main() for the function
+#### Install
+// TODO @kmova @akhilerm
+How to manage installation of the components, mainly CRDs. This is something that is to be done by manager
