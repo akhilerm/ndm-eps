@@ -57,7 +57,7 @@ node-disk-manager/
 
 ```
 
-# Concept Used
+# Concepts Used
 
 #### BlockDevice
 `BlockDevice` will be the core of the project, which will be passed around similar to a go `context`.
@@ -72,11 +72,12 @@ type BlockDevice struct {
 ```
 
 #### cmd
-The `cmd` directory at the root of the project will contain packages for each binary that can be generated from this repository. It 
-should contain only Cobra CLI command code, or the main() for the function
+The `cmd` directory at the root of the project will contain packages for each binary that can be generated from this repository. 
+It should contain only Cobra CLI command code, or the main() for the function
 
 #### AgentDaemon
-Agent daemon is the main ndm daemon process that will be running on the system. The agent daemon will be started by a call from `cmd/agentdaemon`. 
+Agent daemon is the main ndm daemon process that will be running on the system. The agent daemon will be started by a 
+call from `cmd/agentdaemon`. 
 Following will be done
 1. Load the configuration
 2. Initialize DB client
@@ -118,10 +119,23 @@ listed in `udevadm info` and create the config.
 		(eg: Vendor)
 ```
 
+The property filter struct will contain something like:
+```
+type Property string
+type PropertyValue []string
 
+type PropertyFilter struct {
+	Include map[Property]PropertyValue
+	Exclude map[Property]PropertyValue
+}
+```
 #### Probes
 Probes are used to fetch various details of the disk from the system. SMART, Seachest, Capacity, Mount, Udev will be the various probes
 used to fetch the data.
+
+#### Config
+Config will be used for parsing the user provided configuration into an internal struct which can be used for initializing probes, 
+filters, system monitors, and DB clients.
 
 #### Install
 // TODO @kmova @akhilerm
